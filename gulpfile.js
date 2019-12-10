@@ -25,13 +25,9 @@ function styles() {
     return src("src/css/*.css").pipe(concat("PDFViewer.css")).pipe(dest("output/css"));
 }
 
-function defaultTask(){
-    return series(generateJs, styles, minJs, minCss);
-}
-
 exports.watch = function() {
     watch(["src/*/*.*"], series(generateJs, styles));
 };
-exports.default = defaultTask;
+exports.default = series(generateJs, styles, minJs, minCss);
 exports.lib = moveLibs;
 exports.min = series(minJs, minCss);
